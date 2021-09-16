@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { Router } from 'express';
 import { wilderService } from '../services';
 import createError from 'http-errors';
@@ -20,9 +20,12 @@ const wilderController = {
     }
     res.json({ success: true, wilders });
   },
-  readOne: async (req: Request, res: Response) => {
+  readOne: async (req: Request, res: Response, next: NextFunction) => {
     const wilder = await wilderService.readOne(req.params.id);
-    res.send(wilder);
+    if (!wilder) {
+      next(createError('Not Found'));
+    }
+    else res.send(wilder);
   },
   update: async (req: Request, res: Response) => {
     const updatedWilder = await wilderService.update(req.params.id, req.body);

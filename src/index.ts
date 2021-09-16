@@ -2,7 +2,6 @@ import express, { NextFunction, Request, Response } from 'express';
 import mongoose from "mongoose";
 import dotenv from 'dotenv';
 import { WildersRouter } from './controllers';
-import asyncHandler from 'express-async-handler';
 
 const app = express();
 const port = 4000;
@@ -21,8 +20,15 @@ if (process.env.DATABASE_URL) {
   .catch((err) => console.error(err));
 }
 
+const runAsyncWrapper = (callback: any) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    callback(req, res, next)
+      .catch(next);
+  }
+}
+
 // Router calls
-app.use("/wilders", asyncHandler(WildersRouter));
+app.use("/wilders", runAsyncWrapper(WildersRouter));
 
 // TODO: change any type on err props
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
