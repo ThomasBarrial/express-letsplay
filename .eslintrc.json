@@ -1,0 +1,50 @@
+{
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".ts"]
+      }
+    }
+  },
+  "env": {
+    "es2020": true,
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 11,
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint", "eslint-plugin-import"],
+  "rules": {
+    "no-restricted-syntax": "off",
+    "linebreak-style": 0,
+    "camelcase": 0,
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+          "js": "never",
+          "ts": "never"
+      }
+  ],
+    "import/prefer-default-export": [0],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "@typescript-eslint/type-annotation-spacing": [
+      1,
+      {
+        "before": false,
+        "after": true,
+        "overrides": {
+          "arrow": {
+            "before": true,
+            "after": true
+          }
+        }
+      }
+    ]
+  }
+}
